@@ -1,1 +1,4 @@
 Comand For Terminal
+
+Start TailwindCSS
+> npm run dev
