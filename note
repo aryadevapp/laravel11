@@ -5,24 +5,34 @@ Start TailwindCSS
 
 Component
 make component:
-<!-- 
+<!--*
 Navbar = navbar.blade.php
 NavLink = nav-link.blade.php
  -->
-> php artisan make:component Navbar
+> php artisan make:component navbar
 or
->php artisan make:component Header --view <!-- Simple, without class -->
+>php artisan make:component header --view <!-- ? Simple, without class -->
 to use, in code = <x-navbar></x-navbar>
 
 
 Variabel:
-{{ $slot }} <!-- variabel yang berfungsi untuk mengambil data yang berasal dari isi tag, dari component lain -->
-{{ $title(sesuai array yang didefinisikan) }} <!-- varibel yang berfungsi untuk mengambil data dari router -->
-<x-slot:title>{{ $title }}</x-slot:title><!-- membuat variabel untuk dikiim ke component lain, apapun yang ada di dalam tag -->
-:active <!-- untuk mendeffinisikan variabel yang dibuat sendiri, agar bisa digunakan melalui $attributes -->
-{{ $attributes }} <!-- variabel yang berfungsi untuk mengambil data dari atribut tag, dari component lain -->
+{{ $slot }} <!-- ? variabel yang berfungsi untuk mengambil data yang berasal dari isi tag, dari component lain -->
+{{ $title(sesuai array yang didefinisikan) }} <!--? varibel yang berfungsi untuk mengambil data dari router -->
+<x-slot:title>{{ $title }}</x-slot:title><!-- ? membuat variabel custom untuk dikirim ke component lain, apapun yang ada di dalam tag -->
+:active <!-- ? untuk mendeffinisikan variabel, agar bisa digunakan melalui $attributes -->
+{{ $attributes }} <!-- ? variabel yang berfungsi untuk mengambil data dari atribut tag, dari component lain -->
 
 
 
 
 <!--  -->
+[
+  'title' => 'How Writing Heals the Soul',
+  'author' => 'Galang Arya Tama',
+  'body' => 'Writing about a stressful or traumatic event for just fifteen minutes a day offers remarkable health benefits.'
+],
+[
+  'title' => 'An Addiction Medicine Pioneer',
+  'author' => 'Arya Tama',
+  'body' => 'When I was in medical school, neither addiction psychiatry nor addiction medicine existed. Dr. David Smith and a small group of pioneers changed all that.'
+],
