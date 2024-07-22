@@ -3,6 +3,9 @@ Comand For Terminal
 Start TailwindCSS
 > npm run dev
 
+<!-- To see al commant in artisan: -->
+> php artisan
+
 Component
 make component:
 <!--*
@@ -13,6 +16,12 @@ NavLink = nav-link.blade.php
 or
 >php artisan make:component header --view <!-- ? Simple, without class -->
 to use, in code = <x-navbar></x-navbar>
+
+Migration
+make table with migration:
+> php artisan migrate
+> php artisan migrate:fresh <!-- add and clear all data -->
+> php artisan make:migrate create_posts_table <!-- for make new tabel (always use s) -->
 
 
 Variabel:
