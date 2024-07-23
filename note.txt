@@ -28,11 +28,17 @@ make model, for logic and controling database:
 > php artisan make:model Post
 > php artisan make:mode Post -m <!-- and me migration automaticely -->
 
+Factory
+make class to make fake data
+> php artisan make:facotry PostFactory <!-- always use Factory after example -->
+
 Tinker
 > php artisan tinker <!-- to run code, can use  for (make data and more) -->
 >> App\Model\Post::create(['data' => 'data', 'example' => 'example']); <!-- to create data -->
 >> App\Model\Post::all(); <!-- to see all data in tabel Post(same like dircetory when wirte) -->
 >> App\Model\Post::first(); or last(); or find(1); or delate(1); <!-- need to define in var before use it -->
+
+> App\Models\User::factory()->create(); <!-- to make fake data -->
 
 Variabel:
 {{ $slot }} <!-- ? variabel yang berfungsi untuk mengambil data yang berasal dari isi tag, dari component lain -->
