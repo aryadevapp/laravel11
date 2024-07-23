@@ -1,0 +1,164 @@
+Comand For Terminal
+
+Start TailwindCSS
+> npm run dev
+
+<!-- To see al commant in artisan: -->
+> php artisan
+
+Component
+make component:
+<!--*
+Navbar = navbar.blade.php
+NavLink = nav-link.blade.php
+ -->
+> php artisan make:component navbar
+or
+>php artisan make:component header --view <!-- ? Simple, without class -->
+to use, in code = <x-navbar></x-navbar>
+
+Migration
+make table with migration:
+> php artisan migrate
+> php artisan migrate:fresh <!-- add and clear all data -->
+> php artisan make:migrate create_posts_table <!-- for make new tabel (always use s) -->
+
+Model
+make model, for logic and controling database:
+> php artisan make:model Post
+> php artisan make:mode Post -m <!-- and me migration automaticely -->
+
+Tinker
+> php artisan tinker <!-- to run code, can use  for (make data and more) -->
+>> App\Model\Post::create(['data' => 'data', 'example' => 'example']); <!-- to create data -->
+>> App\Model\Post::all(); <!-- to see all data in tabel Post(same like dircetory when wirte) -->
+>> App\Model\Post::first(); or last(); or find(1); or delate(1); <!-- need to define in var before use it -->
+
+Variabel:
+{{ $slot }} <!-- ? variabel yang berfungsi untuk mengambil data yang berasal dari isi tag, dari component lain -->
+{{ $title(sesuai array yang didefinisikan) }} <!--? varibel yang berfungsi untuk mengambil data dari router -->
+<x-slot:title>{{ $title }}</x-slot:title><!-- ? membuat variabel custom untuk dikirim ke component lain, apapun yang ada di dalam tag -->
+:active <!-- ? untuk mendeffinisikan variabel, agar bisa digunakan melalui $attributes -->
+{{ $attributes }} <!-- ? variabel yang berfungsi untuk mengambil data dari atribut tag, dari component lain -->
+
+
+
+
+<!--  -->
+[
+  'id' => 1,
+  'slug' => 'how-writing-heals-the-soul',
+  'title' => 'How Writing Heals the Soul',
+  'author' => 'Galang Arya Tama',
+  'body' => 'Writing about a stressful or traumatic event for just fifteen minutes a day offers remarkable health benefits.'
+],
+[
+  'id' => 2,
+  'slug' => 'an-addiction-medicine-pioneer',
+  'title' => 'An Addiction Medicine Pioneer',
+  'author' => 'Arya Tama',
+  'body' => 'When I was in medical school, neither addiction psychiatry nor addiction medicine existed. Dr. David Smith and a small group of pioneers changed all that.'
+]
+
+
+
+<!-- FIrst: databale\migration\2024_07_22_233554_create_posts_table -->
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('posts', function (Blueprint $table) {
+            $table->id();
+            // always add new code in below id
+            $table->string('title');
+            $table->string('author');
+            $table->string('slug')->unique();
+            $table->string('body');
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('posts');
+    }
+};
+
+
+<!-- FIrst: App\Model\Post.php -->
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
+
+// Class Data
+class Post extends Model{ // class Model agar bisa mengunakan functionn model
+  
+  // jika nama tabel tidak sama dengan nama model maka perlu di definisikan dahulu dengan:
+  // ! protected $table = 'blog_posts';
+  // example if name BlogPosts(Model) thne blog_posts(table name)
+
+  // and if column not, the name ist not defaul id, so you need define with:
+  // example id(default) change to post_id(not default)
+  // ! protected $primaryKey = 'post_id';
+  
+  // Make data with tinker
+  // App\Models\Post::create([                                                                                                                                                             
+    //   . 'title' => 'How Writing Heals the Soul',                                                                                                                                              
+    //   . 'author' => 'Galang Arya Tama',                                                                                                                                                       
+    //   . 'slug' => 'how-writing-heals-the-soul',                                                                                                                                               
+    //   . 'body' => 'Writing about a stressful or traumatic event for just fifteen minutes a day offers remarkable health benefits.'                                                            
+    //   . ]);
+    // or
+    // App\Models\Post::create(['title' => 'An Addiction Medicine Pioneer', 'author' => 'Arya Tama', 'slug' => 'an-addiction-medicine-pioneer', 'body' => 'When I was in medical school, neither addiction psychiatry nor addiction medicine existed. Dr. David Smith and a small group of pioneers changed all that.']);
+    // need to define coulum with = $fillabel(can fill manualy) or $guarded(cant fill manualy):
+    // protected $fillabel = ['title', 'author', 'slug', 'body']; or
+    protected $guarded = ['id', 'created_at', 'updated_at'];
+
+  // public static function all() {
+  //     return [
+  //         [
+  //             'id' => 1,
+  //             'slug' => 'how-writing-heals-the-soul',
+  //             'title' => 'How Writing Heals the Soul',
+  //             'author' => 'Galang Arya Tama',
+  //             'body' => 'Writing about a stressful or traumatic event for just fifteen minutes a day offers remarkable health benefits.'
+  //         ],
+  //         [
+  //             'id' => 2,
+  //             'slug' => 'an-addiction-medicine-pioneer',
+  //             'title' => 'An Addiction Medicine Pioneer',
+  //             'author' => 'Arya Tama',
+  //             'body' => 'When I was in medical school, neither addiction psychiatry nor addiction medicine existed. Dr. David Smith and a small group of pioneers changed all that.'
+  //         ]
+  //     ];
+  // }
+  // public static function find($slug) {
+  //   // return Arr::first(Post::all(), function($post) use ($slug) {
+  //   //   return $post['slug'] == $slug;
+  //   // });
+
+  //   $post = Arr::first(static::all(), fn($post) => $post['slug'] == $slug);
+
+  //   if (!$post) {
+  //     abort(404);
+  //   }
+
+  //   return $post;
+  // }
+};
+

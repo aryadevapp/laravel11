@@ -10,7 +10,7 @@
         <h2 class="mb-2 text-3xl tracking-tight font-bold">{{ $post['title'] }}</h2>
       </a>
       <div>
-        <a href="">{{ $post['author'] }}</a> | 1 Januari 2024
+        <a href="">{{ $post['author'] }}</a> | {{ $post->created_at->diffForHumans() }} <!-- or {{ $post->created_at->format('j F Y') }} to see: angka tanggal, nama bulan dan angka tahun--> 
       </div>
       <p class="my-2">{{ Str::limit($post['body'], 100) }}</p>
       <a href="/posts/{{ $post['slug'] }}" class="my-24 underline">Read More >></a>
