@@ -35,6 +35,14 @@ make class to make fake data
 Make Model, Migration, and Factory
 > php artisan make:model Category -mf
 
+Seeder
+Make db
+> php artisan make:seeder UserSeeder
+> php artisan db:seed
+or
+> php artisan migrate:fresh --seed <!-- to reset database and add new data -->
+
+
 
 Tinker
 > php artisan tinker <!-- to run code, can use  for (make data and more) -->
