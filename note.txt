@@ -32,6 +32,10 @@ Factory
 make class to make fake data
 > php artisan make:facotry PostFactory <!-- always use Factory after example -->
 
+Make Model, Migration, and Factory
+> php artisan make:model Category -mf
+
+
 Tinker
 > php artisan tinker <!-- to run code, can use  for (make data and more) -->
 >> App\Model\Post::create(['data' => 'data', 'example' => 'example']); <!-- to create data -->
@@ -48,7 +52,9 @@ Variabel:
 {{ $attributes }} <!-- ? variabel yang berfungsi untuk mengambil data dari atribut tag, dari component lain -->
 
 
-
+Use this command, if can run Factory:
+> composer dumpautoload
+> php artisan optimize:clear
 
 <!--  -->
 [

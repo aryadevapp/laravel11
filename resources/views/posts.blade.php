@@ -7,9 +7,9 @@
 
     <article class="py-8 max-w-screen-md border-b border-gray-300">
       <a href="/posts/{{ $post['slug'] }}">
-        <h2 class="mb-2 text-3xl tracking-tight font-bold">{{ $post['title'] }}</h2>
+        <h2 class="mb-2 text-3xl tracking-tight font-bold">{{ $post->title }}</h2>
       </a>
-      <a href="">{{ $post['author'] }}</a> | {{ $post->created_at->diffForHumans() }} <!-- or {{ $post->created_at->format('j F Y') }} to see: angka tanggal, nama bulan dan angka tahun--> 
+      By <a class="hover:underline" href="/authors/{{ $post->author->username }}">{{ $post->author->name }}</a> in <a href="/categories/{{ $post->category->slug }}">{{ $post->category->name }}</a> | {{ $post->created_at->diffForHumans() }} <!-- or {{ $post->created_at->format('j F Y') }} to see: angka tanggal, nama bulan dan angka tahun--> 
       <div>
         <p class="my-2">{{ Str::limit($post['body'], 100) }}</p>
         <a href="/posts/{{ $post['slug'] }}" class="my-24 underline">Read More >></a>
