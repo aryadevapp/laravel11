@@ -17,15 +17,18 @@ class CategorySeeder extends Seeder
 
         Category::create([
             'name' => 'Psikologi Klinis',
-            'slug' => 'psikologi-kalinis'
+            'slug' => 'psikologi-kalinis',
+            'color' => 'red'
         ]);
         Category::create([
             'name' => 'Psikologi Insdustri',
-            'slug' => 'psikologi-industri'
+            'slug' => 'psikologi-industri',
+            'color' => 'green'
         ]);
         Category::create([
             'name' => 'Psikologi Forensik',
-            'slug' => 'psikologi-forensik'
+            'slug' => 'psikologi-forensik',
+            'color' => 'yellow'
         ]);
     }
 }

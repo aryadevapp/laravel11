@@ -13,9 +13,28 @@ Route::get('/', function () {
 });
 
 Route::get('/posts', function () {
+
+    // two way, for display data: 
+    // all() : order by first data
+    // get() : order by latest and can user method in front
+    // and
+    // with('author') : make optimal query (Eiger Loading)
+
+    // $posts = Post::with([
+    //     'author',
+    //     'category'
+    // ])->latest()->get();
+
+    // return view('posts', [
+    //     'title' => 'Blog',
+    //     'posts' => $posts
+    // ]);
+
+    // or
+
     return view('posts', [
         'title' => 'Blog',
-        'posts' => Post::all()
+        'posts' => Post::latest()->get()
     ]);
 });
 
@@ -32,6 +51,18 @@ Route::get('/posts/{post:slug}', function (Post $post) {
 
 // menampilan semua artikel, berdasarkan author
 Route::get('/authors/{user:username}', function (User $user) {
+
+        // Lazy Eiger Loading
+
+        // $posts = $user->posts->load('category', 'author');
+
+        // return view('posts', [
+        //     'title' => count($posts)  .' Article by ' . $user->name,
+        //     'posts' => $posts
+        // ]);
+
+        // * or
+
         return view('posts', [
             'title' => count($user->posts)  .' Article by ' . $user->name,
             'posts' => $user->posts
@@ -40,6 +71,16 @@ Route::get('/authors/{user:username}', function (User $user) {
 
 // menampilan semua artikel, berdasarkan category
 Route::get('/categories/{category:slug}', function (Category $category) {
+
+    // $posts = $category->posts->load('author', 'category');
+
+    // return view('posts', [
+    //     'title' => ' Article in ' . $category->name,
+    //     'posts' => $posts
+    // ]);
+
+    // * or
+
     return view('posts', [
         'title' => ' Article in ' . $category->name,
         'posts' => $category->posts

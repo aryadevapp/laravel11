@@ -14,6 +14,9 @@ class Post extends Model
     // protected $fillabel = ['title', 'author', 'slug', 'body'];
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
+    // Eiger Loading
+    protected $with = ['author', 'category'];
+
     public function author(): BelongsTo{
         return $this->belongsTo(User::class);
     }
