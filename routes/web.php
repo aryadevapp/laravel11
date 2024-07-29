@@ -14,9 +14,11 @@ Route::get('/', function () {
 
 Route::get('/posts', function () {
 
-    // two way, for display data: 
+    // * two way, for display data: 
     // all() : order by first data
     // get() : order by latest and can user method in front
+    // paginate(10) : like get but, just display 10 data
+    // simplepaginate(10) : like paginate but, just back and next
     // and
     // with('author') : make optimal query (Eiger Loading)
 
@@ -32,10 +34,34 @@ Route::get('/posts', function () {
 
     // or
 
+    // return view('posts', [
+    //     'title' => 'Blog',
+    //     'posts' => Post::latest()->get()
+    // ]);
+    
+    // * Searching
+    // ? hanya bisa dicara dalam 1 route
+    // $posts = Post::latest();
+
+    // if (request('search')) {
+    //     $posts->where('title', 'like', '%' . request('search') . '%');
+    // }
+
+    // return view('posts', [
+    //     'title' => 'Blog',
+    //     'posts' => $posts->get()
+    // ]);
+
+    // ? bisa di cari dengan multiple route
     return view('posts', [
         'title' => 'Blog',
-        'posts' => Post::latest()->get()
+        'posts' => Post::filter(request([
+            'search',
+            'category',
+            'author'
+        ]))->latest()->paginate(10)->withQueryString()
     ]);
+
 });
 
 // menampilkan semua artikel
@@ -49,43 +75,45 @@ Route::get('/posts/{post:slug}', function (Post $post) {
 
 });
 
-// menampilan semua artikel, berdasarkan author
-Route::get('/authors/{user:username}', function (User $user) {
+// ! Without Searching
+// // menampilan semua artikel, berdasarkan author
+// Route::get('/authors/{user:username}', function (User $user) {
 
-        // Lazy Eiger Loading
+//         // Lazy Eiger Loading
 
-        // $posts = $user->posts->load('category', 'author');
+//         // $posts = $user->posts->load('category', 'author');
 
-        // return view('posts', [
-        //     'title' => count($posts)  .' Article by ' . $user->name,
-        //     'posts' => $posts
-        // ]);
+//         // return view('posts', [
+//         //     'title' => count($posts)  .' Article by ' . $user->name,
+//         //     'posts' => $posts
+//         // ]);
 
-        // * or
+//         // * or
 
-        return view('posts', [
-            'title' => count($user->posts)  .' Article by ' . $user->name,
-            'posts' => $user->posts
-        ]);
-});
+//         return view('posts', [
+//             'title' => count($user->posts)  .' Article by ' . $user->name,
+//             'posts' => $user->posts
+//         ]);
+// });
 
-// menampilan semua artikel, berdasarkan category
-Route::get('/categories/{category:slug}', function (Category $category) {
+// // menampilan semua artikel, berdasarkan category
+// Route::get('/categories/{category:slug}', function (Category $category) {
 
-    // $posts = $category->posts->load('author', 'category');
+//     // $posts = $category->posts->load('author', 'category');
 
-    // return view('posts', [
-    //     'title' => ' Article in ' . $category->name,
-    //     'posts' => $posts
-    // ]);
+//     // return view('posts', [
+//     //     'title' => ' Article in ' . $category->name,
+//     //     'posts' => $posts
+//     // ]);
 
-    // * or
+//     // * or
 
-    return view('posts', [
-        'title' => ' Article in ' . $category->name,
-        'posts' => $category->posts
-    ]);
-});
+//     return view('posts', [
+//         'title' => ' Article in ' . $category->name,
+//         'posts' => $category->posts
+//     ]);
+// });
+// !
 
 Route::get('/about', function () {
     return view('about',[
